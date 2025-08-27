@@ -1,6 +1,5 @@
 import { Pool } from "pg";
-
-const pgUrl = process.env.DATABASE_URL!; // Set in Vercel Project → Settings → Environment Variables
+const pgUrl = process.env.DATABASE_URL!;
 export const pool = new Pool({ connectionString: pgUrl });
 
 export async function q<T=any>(sql: string, params: any[] = []) {
