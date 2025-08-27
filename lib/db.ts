@@ -1,15 +1,14 @@
 // lib/db.ts
 import { Pool } from "pg";
 
-// Vercel 서버리스에서는 Supabase pgBouncer(포트 6543) + sslmode=require 권장
-// DATABASE_URL 예: postgres://postgres:비번@aws-0-xxx.pooler.supabase.com:6543/postgres?sslmode=require
+// Vercel 서버리스에서 Supabase 연결: pooler(6543) + sslmode=require 권장
+// DATABASE_URL 예시:
+// postgres://postgres:****@aws-0-xxx.pooler.supabase.com:6543/postgres?sslmode=require
 const connectionString = process.env.DATABASE_URL!;
 
 export const pool = new Pool({
   connectionString,
-  // ★ 핵심: 인증서 검증 비활성화(셀프사인 체인 오류 회피)
-  ssl: { rejectUnauthorized: false },
-  // 서버리스 친화 옵션(안전한 소형 풀)
+  ssl: { rejectUnauthorized: false }, // ★ 인증서 체인 검증 완화 (self-signed 에러 해결)
   max: 5,
   idleTimeoutMillis: 10_000,
   connectionTimeoutMillis: 10_000,
