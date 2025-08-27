@@ -1,5 +1,5 @@
 import { q } from "../../../lib/db";
-import { rankLinks } from "../../../../lib/rank";
+import { rankLinks } from "../../../lib/rank";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
