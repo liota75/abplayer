@@ -1,14 +1,18 @@
 // lib/db.ts
-import { Pool } from "pg";
+import pg from "pg";
+const { Pool } = pg;
 
-// Vercel 서버리스에서 Supabase 연결: pooler(6543) + sslmode=require 권장
-// DATABASE_URL 예시:
-// postgres://postgres:****@aws-0-xxx.pooler.supabase.com:6543/postgres?sslmode=require
+// 🔒 Supabase pgBouncer(6543) + sslmode=require 를 사용하되,
+//    node-postgres의 TLS 검증을 전역에서 끕니다 (체인에 self-signed 포함시)
+pg.defaults.ssl = { rejectUnauthorized: false };
+
+// Vercel 환경변수에 저장한 풀러 URI (예: ...pooler.supabase.com:6543/...?...sslmode=require)
 const connectionString = process.env.DATABASE_URL!;
 
 export const pool = new Pool({
   connectionString,
-  ssl: { rejectUnauthorized: false }, // ★ 인증서 체인 검증 완화 (self-signed 에러 해결)
+  // 개별 옵션도 남겨둬 이중안전
+  ssl: { rejectUnauthorized: false },
   max: 5,
   idleTimeoutMillis: 10_000,
   connectionTimeoutMillis: 10_000,
