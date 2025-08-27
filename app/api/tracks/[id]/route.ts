@@ -1,5 +1,5 @@
-import { q } from "@/lib/db";
-import { rankLinks } from "@/lib/rank";
+import { q } from "../../../lib/db";
+import { rankLinks } from "../../../lib/rank";
 
 export async function GET(_: Request, { params }: { params: { id: string } }) {
   const [track] = await q<any>(`select * from tracks where id=$1`, [params.id]);
