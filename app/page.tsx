@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Player from "@/components/Player";
+import Player from "../components/Player";
 
 export default function Page(){
   const [list,setList] = useState<any[]>([]);
