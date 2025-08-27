@@ -1,4 +1,4 @@
-import { q } from "../../../../lib/db";
+import { q } from "../../../lib/db";
 import { rankLinks } from "../../../../lib/rank";
 
 export async function GET(req: Request) {
